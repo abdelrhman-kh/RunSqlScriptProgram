@@ -1,0 +1,74 @@
+﻿@model ConnectionString
+@{ 
+    ViewBag.Title = Model != null ? "Edit" : "Create";
+}
+
+<h2> @ViewBag.Title Connection String</h2>
+
+
+<form asp-action="@ViewBag.Title">
+
+    <div asp-validation-summary="All"></div>
+
+    <div class="col-lg-4">
+    <label asp-for="ConnectionStringID" class="control-lable"></label>
+    <input asp-for="ConnectionStringID" class="form-control" readonly/>
+    </div>
+
+    <text> &nbsp; &nbsp; &nbsp;</text>
+
+    <div class="col-lg-4">
+    <label asp-for="ConnectionStringName" class="control-lable"></label>
+    <input asp-for="ConnectionStringName" class="form-control" />
+    </div>
+
+    <text> &nbsp; &nbsp; &nbsp;</text>
+
+    <div class="col-lg-4">
+    <label asp-for="ConnectionStringDataSource" class="control-lable"></label>
+    <input asp-for="ConnectionStringDataSource" class="form-control" />
+    </div>
+
+    <text> &nbsp; &nbsp; &nbsp;</text>
+
+    <div class="col-lg-4">
+    <label asp-for="ConnectionStringUserID" class="control-lable"></label>
+    <input asp-for="ConnectionStringUserID" class="form-control" />
+    </div>
+
+    <text> &nbsp; &nbsp; &nbsp;</text>
+
+    <div class="col-lg-4">
+    <label asp-for="ConnectionStringPassword" class="control-lable"></label>
+    <input asp-for="ConnectionStringPassword" class="form-control" />
+    </div>
+
+    <text> &nbsp; &nbsp; &nbsp;</text>
+
+    <div class="col-lg-4">
+    <label asp-for="ConnectionStringInitialCatalog" class="control-lable"></label>
+    <text> &nbsp; &nbsp; &nbsp;</text>
+    <input asp-for="ConnectionStringInitialCatalog" class="form-control" />
+    </div>
+
+    <text> &nbsp; &nbsp; &nbsp;</text>
+
+    <div class="col-lg-4">
+    <label asp-for="ConnectionsId" class="control-lable"></label>
+    <text> &nbsp; &nbsp; &nbsp;</text>
+    <select asp-for="ConnectionsId" asp-items="@(new SelectList(ViewBag.Connection,"ConnectionsId","ConnectionsName"))" class="form-control">
+
+        <option value="">Select Connections ID</option>
+
+    </select>
+    <text> &nbsp; &nbsp; &nbsp;</text>
+    </div>
+
+    
+
+    <input type="submit" value="Save" class="btn btn-primary" />
+    <text> &nbsp; &nbsp; &nbsp;</text>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+
+
+</form>
