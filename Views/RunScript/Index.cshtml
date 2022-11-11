@@ -1,0 +1,56 @@
+﻿@model RunScript
+
+@{
+    ViewData["Title"] = "RunScripts";
+}
+
+<h2> Run Script</h2>
+
+
+<form asp-action="@ViewBag.Title">
+
+    <text> &nbsp; &nbsp; &nbsp;</text>
+
+
+<div class="col-lg-4">
+    <label asp-for="ConnectionStringID" class="control-lable"></label>
+    <text> &nbsp; &nbsp; &nbsp;</text>
+    <select asp-for="ConnectionStringID" asp-items="@(new SelectList(ViewBag.ConnectionString,"ConnectionStringID","ConnectionStringName"))" class="form-control">
+
+        <option value="">Select Connection String Name</option>
+
+    </select>
+    <text> &nbsp; &nbsp; &nbsp;</text>
+    </div>
+
+
+
+<div class="col-lg-4">
+    <label asp-for="ConnectionsId" class="control-lable"></label>
+    <text> &nbsp; &nbsp; &nbsp;</text>
+    <select asp-for="ConnectionsId" asp-items="@(new SelectList(ViewBag.Connection,"ConnectionsId","ConnectionsName"))" class="form-control">
+
+        <option value="">Select Connections ID</option>
+
+    </select>
+    <text> &nbsp; &nbsp; &nbsp;</text>
+    </div>
+
+    <input type="file"  multiple="multiple"/>
+
+    <div>
+        <text> &nbsp; &nbsp; &nbsp;</text>
+        </div>
+
+    <div>
+
+        <input type="submit" value="Save" class="btn btn-primary" />
+
+        <text> &nbsp; &nbsp; &nbsp;</text>
+
+        <a asp-action="Index" asp-controller="ConnectionString" class="btn btn-secondary">Cancel</a>
+
+    </div>
+
+
+</form>
