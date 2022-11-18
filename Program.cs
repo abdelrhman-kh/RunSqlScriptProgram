@@ -5,6 +5,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddSingleton< HttpContextAccessor,HttpContextAccessor >();
 
+
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(option =>
 {

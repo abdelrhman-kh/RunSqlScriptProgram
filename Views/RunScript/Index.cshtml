@@ -1,56 +1,34 @@
-﻿@model RunScript
+﻿@model FileInputModel
 
 @{
     ViewData["Title"] = "RunScripts";
 }
-
 <h2> Run Script</h2>
-
-
-<form asp-action="@ViewBag.Title">
-
-    <text> &nbsp; &nbsp; &nbsp;</text>
-
+<form asp-controller="RunScript" asp-action="UploadFileViaModel" method="post"
+      enctype="multipart/form-data">
 
 <div class="col-lg-4">
     <label asp-for="ConnectionStringID" class="control-lable"></label>
-    <text> &nbsp; &nbsp; &nbsp;</text>
-    <select asp-for="ConnectionStringID" asp-items="@(new SelectList(ViewBag.ConnectionString,"ConnectionStringID","ConnectionStringName"))" class="form-control">
-
-        <option value="">Select Connection String Name</option>
-
+    <br>
+    <select asp-for="ConnectionStringID" asp-items="@(
+            new SelectList(ViewBag.Connection,"ConnectionStringID","ConnectionStringName"))" class="form-control">
+    <option value="">Select Connection String Name</option>
     </select>
-    <text> &nbsp; &nbsp; &nbsp;</text>
-    </div>
-
-
+    <br>
+    <br>
+    <br> 
+</div>
 
 <div class="col-lg-4">
-    <label asp-for="ConnectionsId" class="control-lable"></label>
-    <text> &nbsp; &nbsp; &nbsp;</text>
-    <select asp-for="ConnectionsId" asp-items="@(new SelectList(ViewBag.Connection,"ConnectionsId","ConnectionsName"))" class="form-control">
+    <input type="file" name="FileToUpload" />
+@*    <button type="submit">Upload File (model)</button>
+*@</div>
+<div class="col-lg-4">
+    <br>
+    <br>
+        <input type="submit" value="Run" class="btn btn-primary" />
 
-        <option value="">Select Connections ID</option>
-
-    </select>
-    <text> &nbsp; &nbsp; &nbsp;</text>
-    </div>
-
-    <input type="file"  multiple="multiple"/>
-
-    <div>
-        <text> &nbsp; &nbsp; &nbsp;</text>
-        </div>
-
-    <div>
-
-        <input type="submit" value="Save" class="btn btn-primary" />
-
-        <text> &nbsp; &nbsp; &nbsp;</text>
-
-        <a asp-action="Index" asp-controller="ConnectionString" class="btn btn-secondary">Cancel</a>
-
-    </div>
-
-
+    <a asp-action="Index" asp-controller="ConnectionString" class="btn btn-secondary">Cancel</a>
+</div>
 </form>
+
