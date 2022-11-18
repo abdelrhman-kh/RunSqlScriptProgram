@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.SqlServer.Management.Common;
 using SqlScript.Models;
+using System.Data;
 using System.Data.SqlClient;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using Server = Microsoft.SqlServer.Management.Smo.Server;
@@ -91,7 +92,7 @@ namespace SqlScript.Controllers
                 
             }
 
-            return View();
+            return RedirectToAction("Index");
         }
 
         public void RunScriptData(string data, string dataSource, string userID, string password, string initialCatalog)
@@ -116,11 +117,14 @@ namespace SqlScript.Controllers
                         {
                             while (reader.Read())
                             {
-                                Console.WriteLine("{0} {1}", reader.GetString(0), reader.GetString(1));
+                                ReadSingleRow((IDataRecord)reader);
+                                //Console.WriteLine("{0} {1}", reader.GetString(0), reader.GetString(1));
                             }
+                            reader.Close();
                         }
+                        connection.Close();
                     }
-                    connection.Close();
+                    
                 }
             }
             catch (SqlException e)
@@ -130,6 +134,10 @@ namespace SqlScript.Controllers
             Console.WriteLine("\nDone. Press enter.");
             Console.ReadLine();
             
+        }
+        private static void ReadSingleRow(IDataRecord dataRecord)
+        {
+            Console.WriteLine(String.Format("{0}, {1}", dataRecord[0], dataRecord[1]));
         }
     }
 }
