@@ -1,3 +1,6 @@
+
+using NToastNotify;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +8,15 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddSingleton< HttpContextAccessor,HttpContextAccessor >();
 
+builder.Services.AddMvc().AddNToastNotifyToastr(new ToastrOptions()
+{
+    ProgressBar = false,
+    PositionClass = ToastPositions.TopRight,
+    CloseButton = true,
+    CloseDuration=true,
+    HideDuration=10000
+});
+;
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(option =>
@@ -24,6 +36,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseNToastNotify();
 
 app.UseSession();
 

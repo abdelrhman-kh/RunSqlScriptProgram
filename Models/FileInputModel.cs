@@ -4,7 +4,7 @@ namespace SqlScript.Models
 {
     public class FileInputModel
     {
-        public IFormFile FileToUpload { get; set; }
+        public List<IFormFile> FileToUploadList { get; set; }
         public int? ConnectionStringID { get; set; }
 
 

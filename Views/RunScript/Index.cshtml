@@ -1,8 +1,10 @@
 ﻿@model FileInputModel
+@await Component.InvokeAsync("NToastNotify")
 
 @{
     ViewData["Title"] = "RunScripts";
 }
+
 <h2> Run Script</h2>
 <form asp-controller="RunScript" asp-action="UploadFileViaModel" method="post"
       enctype="multipart/form-data">
@@ -20,7 +22,7 @@
 </div>
 
 <div class="col-lg-4">
-    <input type="file" name="FileToUpload" />
+    <input type="file" name="FileToUploadList" multiple/>
 @*    <button type="submit">Upload File (model)</button>
 *@</div>
 <div class="col-lg-4">
