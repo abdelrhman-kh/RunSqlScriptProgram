@@ -2,6 +2,9 @@
 using NToastNotify;
 using SqlScript.Models;
 using System.Data.SqlClient;
+using System;
+using System.Drawing;
+using System.IO;
 
 
 namespace SqlScript.Controllers
@@ -33,9 +36,9 @@ namespace SqlScript.Controllers
             {
                 foreach (var file in model.FileToUploadList)
                 {
-                    
+
                     var path = Path.Combine(
-                            Directory.GetCurrentDirectory(), "wwwroot",
+                            Directory.GetCurrentDirectory(), "wwwroot/Script's",
                             DateTime.Now.ToString("yyyy-MM-dd") + "---" + file.FileName);
 
                     using (var stream = new FileStream(path, FileMode.Create))
@@ -55,18 +58,34 @@ namespace SqlScript.Controllers
                             string initialCatalog = connectionStringData.ConnectionStringInitialCatalog;
                             var returnData = RunScriptData(data, dataSource, userID, password, initialCatalog);
                             result += returnData + "\r\n";
+
+                            fileData.Close();
+
+                            if (result.Contains("Exception"))
+                            {
+
+                                if (System.IO.File.Exists(path))
+                                {
+                                    System.IO.File.Delete(path);
+                                }
+                                path = Path.Combine(
+                                Directory.GetCurrentDirectory(), "wwwroot/Script's",
+                                DateTime.Now.ToString("yyyy-MM-dd") + "---" + "Error" + "---" + file.FileName);
+                                using (var stream = new FileStream(path, FileMode.OpenOrCreate))
+                                {
+                                    await file.CopyToAsync(stream);
+                                }
+                                _toastNotification.AddErrorToastMessage(file.FileName + result);
+
+                            }
+                            else
+                            {
+                                _toastNotification.AddSuccessToastMessage(file.FileName + result);
+                            }
                         }
                     }
                 }
-                if (result.Contains("Exception"))
-                {
-                    _toastNotification.AddErrorToastMessage(result);
-
-                }
-                else
-                {
-                    _toastNotification.AddSuccessToastMessage(result);
-                }
+                
 
             }
             catch (Exception e)

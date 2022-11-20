@@ -1,4 +1,3 @@
-
 using NToastNotify;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,8 +12,7 @@ builder.Services.AddMvc().AddNToastNotifyToastr(new ToastrOptions()
     ProgressBar = false,
     PositionClass = ToastPositions.TopRight,
     CloseButton = true,
-    CloseDuration=true,
-    HideDuration=10000
+    CloseDuration=false
 });
 ;
 
@@ -24,7 +22,11 @@ builder.Services.AddSession(option =>
     option.IdleTimeout = TimeSpan.FromMinutes(120);
 });
 
+
+
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
