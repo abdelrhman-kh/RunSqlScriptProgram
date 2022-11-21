@@ -16,3 +16,13 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+footer {
+    clear: both;
+    background-color: #fff;
+    width: 100%;
+    padding: 20px 0;
+    border-bottom: 1px solid #5c5c5c;
+    position: absolute;
+    bottom: 0px;
+}
