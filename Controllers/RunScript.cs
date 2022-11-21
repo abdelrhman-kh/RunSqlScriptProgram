@@ -26,6 +26,9 @@ namespace SqlScript.Controllers
             ViewBag.Connection = this._databaseContext.DbConnectionString.ToList();
             return View();
         }
+
+        [HttpPost]
+        [RequestSizeLimit(100_000_000)]
         public async Task<IActionResult> UploadFileViaModel(FileInputModel model)
         {
             if (model == null ||
@@ -39,7 +42,7 @@ namespace SqlScript.Controllers
 
                     var path = Path.Combine(
                             Directory.GetCurrentDirectory(), "wwwroot/Script's",
-                            DateTime.Now.ToString("yyyy-MM-dd") + "---" + file.FileName);
+                            DateTime.Now.ToString("yyyy-MM-dd-hh-mm") + "---" + file.FileName);
 
                     using (var stream = new FileStream(path, FileMode.Create))
                     {
@@ -70,7 +73,7 @@ namespace SqlScript.Controllers
                                 }
                                 path = Path.Combine(
                                 Directory.GetCurrentDirectory(), "wwwroot/Script's",
-                                DateTime.Now.ToString("yyyy-MM-dd") + "---" + "Error" + "---" + file.FileName);
+                                DateTime.Now.ToString("yyyy-MM-dd-hh-mm") + "---" + "Error" + "---" + file.FileName);
                                 using (var stream = new FileStream(path, FileMode.OpenOrCreate))
                                 {
                                     await file.CopyToAsync(stream);
