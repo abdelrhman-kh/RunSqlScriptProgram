@@ -13,6 +13,9 @@ namespace SqlScript.Controllers
     public class ConnectionStringController : Controller
     {
         DatabaseContext _databaseContext = new DatabaseContext();
+
+        //manage functionality of ConnectionString grid view for Search bar
+        //return ConnectionString data via Dbcontext using function GetConnectionString 
         public IActionResult Index(string SortField, string currentSortField, SortDirection SortDirection, string SearchByName)
         {
             var connectionstring = GetConnectionString();
@@ -21,6 +24,7 @@ namespace SqlScript.Controllers
             return View(this.SortConnectionString(connectionstring, SortField, currentSortField, SortDirection));
         }
         
+        //function for get ConnectionString data and Connections data via Dbcontext based on custom
         public List<ConnectionString> GetConnectionString()
         {
             var connectionstring = (from ConnectionString in _databaseContext.DbConnectionString
@@ -40,12 +44,16 @@ namespace SqlScript.Controllers
             return connectionstring;
         }
 
+        //manage functionality Create Button of ConnectionString
         public IActionResult Create()
         {
             ViewBag.Connection = this._databaseContext.DbConnections.ToList();
             return View();
         }
 
+
+
+        //manage functionality Create ConnectionString and save data using databaseContext
         [HttpPost]
         public IActionResult Create(ConnectionString model)
         {
@@ -63,6 +71,8 @@ namespace SqlScript.Controllers
             return View();
         }
 
+
+        //manage functionality Edit Button of ConnectionString and get data
         public IActionResult Edit(int ID)
         {
             ConnectionString data = this._databaseContext.DbConnectionString.Where(option => option.ConnectionStringID == ID).FirstOrDefault();
@@ -70,6 +80,8 @@ namespace SqlScript.Controllers
             return View("Create",data);
         }
 
+
+        //manage functionality Edit ConnectionString and save data using databaseContext
         [HttpPost]
         public IActionResult Edit(ConnectionString model)
         {
@@ -87,6 +99,8 @@ namespace SqlScript.Controllers
             return View("Create", model);
         }
 
+
+        //manage functionality Delete Button of ConnectionString and get data
         public IActionResult Delete(int ID)
         {
             ConnectionString data = this._databaseContext.DbConnectionString.Where(option => option.ConnectionStringID == ID).FirstOrDefault();
@@ -97,7 +111,7 @@ namespace SqlScript.Controllers
             }
             return RedirectToAction("Index");
         }
-
+        //function for declaration Sorting
         private List<ConnectionString> SortConnectionString( List<ConnectionString> ConnectionStrings, string SortField, string currentSortField, SortDirection SortDirection)
         {
             if (string.IsNullOrEmpty(SortField))
@@ -113,7 +127,7 @@ namespace SqlScript.Controllers
                     ViewBag.SortDirection = SortDirection.Ascending;
                     ViewBag.SortField = SortField;
             }
-
+            
             var propertyInfo = typeof(ConnectionString).GetProperty(ViewBag.SortField);
             if (ViewBag.SortDirection == SortDirection.Ascending)
                 ConnectionStrings = ConnectionStrings.OrderBy(option => propertyInfo.GetValue(option, null)).ToList();
