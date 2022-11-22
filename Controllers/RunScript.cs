@@ -5,6 +5,8 @@ using System.Data.SqlClient;
 using System;
 using System.Drawing;
 using System.IO;
+using System.Text;
+using Microsoft.Extensions.FileProviders;
 
 
 namespace SqlScript.Controllers
@@ -74,15 +76,50 @@ namespace SqlScript.Controllers
                                 path = Path.Combine(
                                 Directory.GetCurrentDirectory(), "wwwroot/Script's",
                                 DateTime.Now.ToString("yyyy-MM-dd-hh-mm") + "---" + "Error" + "---" + file.FileName);
+
                                 using (var stream = new FileStream(path, FileMode.OpenOrCreate))
                                 {
                                     await file.CopyToAsync(stream);
                                 }
+
+                                FileStream fs = new FileStream(path, FileMode.Open, FileAccess.ReadWrite);
+                                fs.Seek(0, SeekOrigin.Begin);
+
+                                StreamWriter sw = new StreamWriter(fs);
+                                await sw.WriteLineAsync(result);
+                                //sw.WriteLine(result);
+
+                                sw.Close();
+                                fs.Close();
+
                                 _toastNotification.AddErrorToastMessage(file.FileName + result);
 
                             }
                             else
                             {
+                                if (System.IO.File.Exists(path))
+                                {
+                                    System.IO.File.Delete(path);
+                                }
+                                path = Path.Combine(
+                                Directory.GetCurrentDirectory(), "wwwroot/Script's",
+                                DateTime.Now.ToString("yyyy-MM-dd-hh-mm") + "---" + file.FileName);
+
+                                using (var stream = new FileStream(path, FileMode.OpenOrCreate))
+                                {
+                                    await file.CopyToAsync(stream);
+                                }
+
+                                FileStream fs = new FileStream(path, FileMode.Open, FileAccess.ReadWrite);
+                                fs.Seek(0, SeekOrigin.Begin);
+
+                                StreamWriter sw = new StreamWriter(fs);
+                                await sw.WriteLineAsync(result);
+                                //sw.WriteLine(result);
+
+                                sw.Close();
+                                fs.Close();
+
                                 _toastNotification.AddSuccessToastMessage(file.FileName + result);
                             }
                         }
