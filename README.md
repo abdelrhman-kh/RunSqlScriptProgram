@@ -19,3 +19,11 @@
 ---
 ![Screenshot%202022-11-20%20220124.png](/attachment/Screenshot%202022-11-20%20220124.png)
 
+### select a `Connection String` from list that's is Connection String using to apply some query
+---
+### upload one or more than files with any extensions to run content into server based on selected `Connection String`
+---
+### when run
+
+![Screenshot 2022-11-27 130608.png](/attachment/Screenshot%202022-11-27%20130608.png)
+

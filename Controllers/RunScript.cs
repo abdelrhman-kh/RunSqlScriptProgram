@@ -33,6 +33,9 @@ namespace SqlScript.Controllers
         [RequestSizeLimit(100_000_000)]
         public async Task<IActionResult> UploadFileViaModel(FileInputModel model)
         {
+
+            System.IO.Directory.CreateDirectory("wwwroot/Script's");
+
             if (model == null ||
                 model.FileToUploadList == null || model.FileToUploadList.Count == 0)
                 return Content("file not selected");

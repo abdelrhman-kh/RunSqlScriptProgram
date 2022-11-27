@@ -4,3 +4,5 @@ Add-Migration InitialMigration
 
 Update-Database
 
+dotnet ef database update
+
