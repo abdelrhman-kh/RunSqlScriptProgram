@@ -7,6 +7,13 @@
 ---
 ### restore `~/Docs/ManualScriptDB.bak` as `ManualScriptDB` database
 ---
+### install `dotnet SDK 6`
+---
+### from downloaded site folder run powershell 
+```powershell
+dotnet run
+```
+---
 ### for create a new  Go to `ConnectionString` from the header and  `create new` 
 
 ![Screenshot%202022-11-20%20220045.png](/attachment/Screenshot%202022-11-20%20220045.png)
