@@ -1,6 +1,12 @@
 # RunSqlScriptProgram
 ### This is an Application Created by `dotnet MVC 6.0` this app used the concept `code first `  This has a CRUD Application for managing the `mssql connection string `  and has a small function for taking an `mssql script` as a `file` or more and running on an mssql database instance  based on choose entry `mssql connection string `
-
+---
+### install `sql express 2019`
+---
+### create `login` with name `test` and password `test` or change it and follow changed into `appsettings.json` 
+---
+### restore `~/Docs/ManualScriptDB.bak` as `ManualScriptDB` database
+---
 ### for create a new  Go to `ConnectionString` from the header and  `create new` 
 
 ![Screenshot%202022-11-20%20220045.png](/attachment/Screenshot%202022-11-20%20220045.png)
@@ -23,7 +29,7 @@
 ---
 ### upload one or more than files with any extensions to run content into server based on selected `Connection String`
 ---
-### when run
+### when `Run` button fire will be create folder `~/wwwroot/Script's` and if file uploaded run success will be copied file into `~/wwwroot/Script's` with file content based on `execution result` and change `file name` with name convention generated with `Date` + `Time` + `Filename` in general if file uploaded run failure will be append `Error` to name of copied file
 
 ![Screenshot 2022-11-27 130608.png](/attachment/Screenshot%202022-11-27%20130608.png)
 
