@@ -5,6 +5,7 @@ using System.Net.Http.Headers;
 
 namespace SqlScript.Controllers
 {
+    //not used
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

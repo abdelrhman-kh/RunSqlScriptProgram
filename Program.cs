@@ -6,8 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// add Http Context to the container.
 builder.Services.AddSingleton< HttpContextAccessor,HttpContextAccessor >();
 
+// add Toast Notify to the container.
 builder.Services.AddMvc().AddNToastNotifyToastr(new ToastrOptions()
 {
     ProgressBar = false,
@@ -15,7 +17,7 @@ builder.Services.AddMvc().AddNToastNotifyToastr(new ToastrOptions()
     CloseButton = true,
     CloseDuration=false
 });
-;
+
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(option =>
@@ -23,11 +25,7 @@ builder.Services.AddSession(option =>
     option.IdleTimeout = TimeSpan.FromMinutes(120);
 });
 
-
-
-
 var app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -38,17 +36,6 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-//var cacheMaxAgeOneWeek = (60 * 60 * 24 * 7).ToString();
-//app.UseStaticFiles(new StaticFileOptions
-//{
-//    OnPrepareResponse = ctx =>
-//    {
-//        ctx.Context.Response.Headers.Append(
-//             "Cache-Control", $"public, max-age={cacheMaxAgeOneWeek}");
-//    }
-//});
-
 app.UseStaticFiles();
 app.UseNToastNotify();
 

@@ -13,22 +13,31 @@ namespace SqlScript.Controllers
 {
     public class RunScript : Controller
     {
+        //object for used Database Context for get and set data
         DatabaseContext _databaseContext = new DatabaseContext();
+
+        //object for used Http Context for get data from form
         private readonly HttpContextAccessor Accessor;
         private readonly IToastNotification _toastNotification;
 
+
+        //constructor of Controller
         public RunScript(HttpContextAccessor accessor , IToastNotification toastNotification)
         {
             Accessor = accessor;
             _toastNotification = toastNotification;
         }
 
+
+        //send data to view of index razor page
         public IActionResult Index()
         {
             ViewBag.Connection = this._databaseContext.DbConnectionString.ToList();
             return View();
         }
 
+
+        //get data from form using object of FileInputModel contains files uploaded and data of Connection String
         [HttpPost]
         [RequestSizeLimit(100_000_000)]
         public async Task<IActionResult> UploadFileViaModel(FileInputModel model)
@@ -138,6 +147,8 @@ namespace SqlScript.Controllers
             return RedirectToAction("Index");
         }
 
+
+        //method for run sql script and read execution result
         public  string RunScriptData(string data, string dataSource, string userID, string password, string initialCatalog)
         {
             var result = string.Empty;
