@@ -44,6 +44,7 @@ namespace SqlScript.Controllers
         {
 
             System.IO.Directory.CreateDirectory("wwwroot/Script's");
+            System.IO.Directory.CreateDirectory("wwwroot/Script's/"+ DateTime.Now.ToString("yyyy-MM-dd"));
 
             if (model == null ||
                 model.FileToUploadList == null || model.FileToUploadList.Count == 0)
@@ -55,7 +56,7 @@ namespace SqlScript.Controllers
                 {
 
                     var path = Path.Combine(
-                            Directory.GetCurrentDirectory(), "wwwroot/Script's",
+                            Directory.GetCurrentDirectory(), "wwwroot/Script's/" + DateTime.Now.ToString("yyyy-MM-dd"),
                             DateTime.Now.ToString("yyyy-MM-dd-hh-mm") + "---" + file.FileName);
 
                     using (var stream = new FileStream(path, FileMode.Create))
@@ -86,7 +87,7 @@ namespace SqlScript.Controllers
                                     System.IO.File.Delete(path);
                                 }
                                 path = Path.Combine(
-                                Directory.GetCurrentDirectory(), "wwwroot/Script's",
+                                Directory.GetCurrentDirectory(), "wwwroot/Script's/" + DateTime.Now.ToString("yyyy-MM-dd"),
                                 DateTime.Now.ToString("yyyy-MM-dd-hh-mm") + "---" + "Error" + "---" + file.FileName);
 
                                 using (var stream = new FileStream(path, FileMode.OpenOrCreate))
@@ -114,7 +115,7 @@ namespace SqlScript.Controllers
                                     System.IO.File.Delete(path);
                                 }
                                 path = Path.Combine(
-                                Directory.GetCurrentDirectory(), "wwwroot/Script's",
+                                Directory.GetCurrentDirectory(), "wwwroot/Script's/" + DateTime.Now.ToString("yyyy-MM-dd"),
                                 DateTime.Now.ToString("yyyy-MM-dd-hh-mm") + "---" + file.FileName);
 
                                 using (var stream = new FileStream(path, FileMode.OpenOrCreate))
