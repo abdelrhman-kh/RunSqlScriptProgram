@@ -76,12 +76,6 @@ namespace SqlScript.Controllers
                         using (StreamReader fileData = new StreamReader(path))
                         {
                             var data = await fileData.ReadToEndAsync();
-
-
-                            
-
-
-
                             string dataSource = connectionStringData.ConnectionStringDataSource;
                             string userID = connectionStringData.ConnectionStringUserID;
                             string password = connectionStringData.ConnectionStringPassword;
