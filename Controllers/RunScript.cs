@@ -7,6 +7,8 @@ using System.Drawing;
 using System.IO;
 using System.Text;
 using Microsoft.Extensions.FileProviders;
+using System.IO.Pipes;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 
 namespace SqlScript.Controllers
@@ -65,11 +67,21 @@ namespace SqlScript.Controllers
                     }
                     var connectionStringData = _databaseContext.DbConnectionString.FirstOrDefault(c => c.ConnectionStringID == model.ConnectionStringID);
 
+                    var oldLines = System.IO.File.ReadAllLines(path);
+                    var newLines = oldLines.Where(line => !line.Contains("GO"));
+                    System.IO.File.WriteAllLines(path, newLines);
+
                     if (connectionStringData != null)
                     {
                         using (StreamReader fileData = new StreamReader(path))
                         {
                             var data = await fileData.ReadToEndAsync();
+
+
+                            
+
+
+
                             string dataSource = connectionStringData.ConnectionStringDataSource;
                             string userID = connectionStringData.ConnectionStringUserID;
                             string password = connectionStringData.ConnectionStringPassword;
@@ -88,7 +100,7 @@ namespace SqlScript.Controllers
                                 }
                                 path = Path.Combine(
                                 Directory.GetCurrentDirectory(), "wwwroot/Script's/" + DateTime.Now.ToString("yyyy-MM-dd"),
-                                DateTime.Now.ToString("yyyy-MM-dd-hh-mm") + "---" + "Error" + "---" + file.FileName);
+                                DateTime.Now.ToString("yyyy-MM-dd-hh-mm") + "---" + connectionStringData.ConnectionStringName + "Error" + "---" + file.FileName);
 
                                 using (var stream = new FileStream(path, FileMode.OpenOrCreate))
                                 {
@@ -116,7 +128,7 @@ namespace SqlScript.Controllers
                                 }
                                 path = Path.Combine(
                                 Directory.GetCurrentDirectory(), "wwwroot/Script's/" + DateTime.Now.ToString("yyyy-MM-dd"),
-                                DateTime.Now.ToString("yyyy-MM-dd-hh-mm") + "---" + file.FileName);
+                                DateTime.Now.ToString("yyyy-MM-dd-hh-mm") + "---" + connectionStringData.ConnectionStringName + "---" + file.FileName);
 
                                 using (var stream = new FileStream(path, FileMode.OpenOrCreate))
                                 {
@@ -124,6 +136,7 @@ namespace SqlScript.Controllers
                                 }
 
                                 FileStream fs = new FileStream(path, FileMode.Open, FileAccess.ReadWrite);
+                                
                                 fs.Seek(0, SeekOrigin.Begin);
 
                                 StreamWriter sw = new StreamWriter(fs);
