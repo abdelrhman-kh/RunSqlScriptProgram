@@ -67,15 +67,14 @@ namespace SqlScript.Controllers
                     }
                     var connectionStringData = _databaseContext.DbConnectionString.FirstOrDefault(c => c.ConnectionStringID == model.ConnectionStringID);
 
-                    var oldLines = System.IO.File.ReadAllLines(path);
-                    var newLines = oldLines.Where(line => !line.Contains("GO"));
-                    System.IO.File.WriteAllLines(path, newLines);
-
                     if (connectionStringData != null)
                     {
                         using (StreamReader fileData = new StreamReader(path))
                         {
                             var data = await fileData.ReadToEndAsync();
+
+                            
+
                             string dataSource = connectionStringData.ConnectionStringDataSource;
                             string userID = connectionStringData.ConnectionStringUserID;
                             string password = connectionStringData.ConnectionStringPassword;
@@ -159,6 +158,8 @@ namespace SqlScript.Controllers
         //method for run sql script and read execution result
         public  string RunScriptData(string data, string dataSource, string userID, string password, string initialCatalog)
         {
+            
+
             var result = string.Empty;
             try
             {
@@ -171,20 +172,29 @@ namespace SqlScript.Controllers
                 using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
                 {
                     connection.Open();
-                    using (SqlCommand command = new SqlCommand(data, connection))
+
+                    string SplitData = "GO";
+                    string[] subs = data.Split(SplitData, StringSplitOptions.RemoveEmptyEntries);
+
+                    foreach (var sub in subs)
                     {
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlCommand command = new SqlCommand(sub, connection))
                         {
-                            while (reader.Read())
+                            using (SqlDataReader reader = command.ExecuteReader())
                             {
-                                for (int inc = 0; inc < reader.FieldCount; inc++)
+                                while (reader.Read())
                                 {
-                                    result += reader[inc] + "\r\n";
+                                    for (int inc = 0; inc < reader.FieldCount; inc++)
+                                    {
+                                        result += reader[inc] + "\r\n";
+                                    }
                                 }
+                                reader.Close();
                             }
-                            reader.Close();
                         }
                     }
+
+                    
                     connection.Close();
                 }
             }
