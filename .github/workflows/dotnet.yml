@@ -27,7 +27,8 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Publish
-      run: dotnet publish RunSqlScriptProgram/SqlScript.csproj -c Release -o release
+      run: msbuild RunSqlScriptProgram/SqlScript.csproj -c Release -o release — nologo
+      working-directory: RunSqlScriptProgram
     - name: Upload Build Artifact
       uses: actions/upload-artifact@v2
       with:
