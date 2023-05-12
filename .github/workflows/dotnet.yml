@@ -34,10 +34,5 @@ jobs:
       with:
         name: Application_Artifact
         path: /home/runner/work/RunSqlScriptProgram/SqlScript/release/
-    - name: Commit release to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@3.7.1
-      with:
-         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-         BRANCH: release
-         FOLDER: release
+
 
